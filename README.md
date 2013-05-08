@@ -40,9 +40,18 @@ l.set(o, 99) // => { a: { aa: 99 }, b: { bb: [3,4] } }
 map a value through a lense
 
 ```js
-var l = L('b', 'bb') // same as L.compose(L('bb'), L('b')), think xpath
+var l = L.path('b', 'bb') // same as L.compose(L('bb'), L('b')), think xpath
 
 L.modify(l, o, function (v) {
     return v.concat(99);
 }) // => { a: { aa: 1 }, b: { bb: [3,4,99] } }
+```
+
+zip some lenses
+```js
+l1 = L('a', 'aa') // same as L.path('a', 'aa')
+l2 = L('d')
+lz = L.zip(l1, l2)
+lz.get(o) // => [1, undefined]
+lz.set([99, 'problems']) // => { a: { aa: 99 }, b: { bb: [3,4] }, d: 'problems' }
 ```

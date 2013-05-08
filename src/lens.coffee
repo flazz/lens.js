@@ -15,7 +15,7 @@ L = do ->
       o2[k] = v
       o2
 
-  lense = (x) ->
+  lens = (x) ->
     c =
       switch (typeof x)
         when 'number' then ary
@@ -46,14 +46,14 @@ L = do ->
     l.set o, v2
 
   path = (specs) ->
-    ls = specs.map (s) -> lense(s)
+    ls = specs.map (s) -> lens(s)
     ls.reduceRight (acc, l) -> compose acc, l
 
   module = ->
     args = Array.prototype.slice.call(arguments);
     path args
 
-  module.lense = lense
+  module.lens = lens
   module.compose = compose
   module.modify = modify
   module.path = path
