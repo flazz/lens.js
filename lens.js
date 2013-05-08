@@ -99,4 +99,6 @@
     return module;
   })();
 
+  window.L = L;
+
 }).call(this);

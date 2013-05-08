@@ -59,3 +59,5 @@ L = do ->
   module.path = path
   module.zip = zip
   module
+
+window.L = L
