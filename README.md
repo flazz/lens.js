@@ -18,14 +18,14 @@ var o = {
 }
 ```
 
-lens to focus on a member by 'a'
+lens to focus on a member by key 'a'
 ```js
 var l = L.lens('a')
 l.get(o) // => { aa: 1 }
 l.set(o, 'x') // => { a: 'x', b: { bb: 2 }, c: { cc: [1, 2] } }
 ```
 
-compose lenses like functions
+compose lenses (like functions)
 ```js
 var l1 = L('a') // same as L.lens('a')
 var l2 = L('aa')
