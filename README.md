@@ -7,7 +7,6 @@ example
 -------
 
 An arbitrarily complex object
-
 ```js
 var o = {
   a: {
@@ -20,7 +19,6 @@ var o = {
 ```
 
 lens to focus on a member by 'a'
-
 ```js
 var l = L.lens('a')
 l.get(o) // => { aa: 1 }
@@ -28,7 +26,6 @@ l.set(o, 'x') // => { a: 'x', b: { bb: 2 }, c: { cc: [1, 2] } }
 ```
 
 compose lenses like functions
-
 ```js
 var l1 = L('a') // same as L.lens('a')
 var l2 = L('aa')
@@ -37,8 +34,7 @@ l.get(o) // =>  1
 l.set(o, 99) // => { a: { aa: 99 }, b: { bb: [3,4] } }
 ```
 
-map a value through a lense
-
+modify a value through a lens
 ```js
 var l = L.path('b', 'bb') // same as L.compose(L('bb'), L('b')), think xpath
 
@@ -53,5 +49,5 @@ l1 = L('a', 'aa') // same as L.path('a', 'aa')
 l2 = L('d')
 lz = L.zip(l1, l2)
 lz.get(o) // => [1, undefined]
-lz.set([99, 'problems']) // => { a: { aa: 99 }, b: { bb: [3,4] }, d: 'problems' }
+lz.set(o, [99, 'problems']) // => { a: { aa: 99 }, b: { bb: [3,4] }, d: 'problems' }
 ```
