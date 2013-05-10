@@ -28,19 +28,19 @@ L = do ->
       o2 = l1.get o
       l1.set(o, l2.set(o2, v))
 
-  zip = (l1, l2) ->
-    get: (o) -> [
-      l1.get o
-      l2.get o
-    ]
+  zip = ->
+    ls = Array.prototype.slice.call arguments
+
+    get: (o) ->
+      ls.map (l) ->
+        l.get o
 
     set: (o, vs) ->
-      [v1, v2] = vs
-      console.log vs
-      o2 = l1.set o, v1
-      l2.set o2, v2
+      ls.reduce (acc, l, ix) ->
+        l.set acc, vs[ix]
+      , o
 
-  modify = (l, o, f) ->
+  mod = (l, o, f) ->
     v = l.get o
     v2 = f(v)
     l.set o, v2
@@ -50,14 +50,12 @@ L = do ->
     ls.reduceRight (acc, l) -> compose acc, l
 
   module = ->
-    args = Array.prototype.slice.call(arguments);
+    args = Array.prototype.slice.call arguments
     path args
 
   module.lens = lens
   module.compose = compose
-  module.modify = modify
+  module.mod = mod
   module.path = path
   module.zip = zip
   module
-
-window.L = L
