@@ -4,37 +4,49 @@ var L;
 L = (function() {
   var ary, compose, lens, mod, module, obj, path, zip;
   ary = function(ix) {
+    var copy;
+    copy = function(a) {
+      return Array.apply(null, a);
+    };
     return {
       get: function(a) {
         return a[ix];
       },
       set: function(a, v) {
         var a2;
-        a2 = Array.apply(null, a);
+        a2 = copy(a);
         a2[ix] = v;
         return a2;
       }
     };
   };
   obj = function(k) {
+    var copy;
+    copy = function(o) {
+      return (function(o2, k) {
+        var v;
+        for (k in o) {
+          v = o[k];
+          o2[k] = v;
+        }
+        return o2;
+      })({}, void 0);
+    };
     return {
       get: function(o) {
         return o[k];
       },
       set: function(o, v) {
-        var k2, o2;
-        o2 = {};
-        for (k2 in o) {
-          o2[k2] = o[k2];
-        }
+        var o2;
+        o2 = copy(o);
         o2[k] = v;
         return o2;
       }
     };
   };
   lens = function(x) {
-    var c;
-    c = (function() {
+    var cons;
+    cons = (function() {
       switch (typeof x) {
         case 'number':
           return ary;
@@ -42,7 +54,7 @@ L = (function() {
           return obj;
       }
     })();
-    return c(x);
+    return cons(x);
   };
   compose = function(l2, l1) {
     return {

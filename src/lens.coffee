@@ -1,26 +1,30 @@
 L = do ->
+
   ary = (ix) ->
+    copy = (a) -> Array.apply null, a
     get: (a) -> a[ix]
     set: (a, v) ->
-      a2 = Array.apply null, a
+      a2 = copy a
       a2[ix] = v
       a2
 
   obj = (k) ->
+    copy = (o) ->
+      do (o2 = {}, k = undefined) ->
+        o2[k] = v for k, v of o
+        o2
     get: (o) -> o[k]
     set: (o, v) ->
-      o2 = {}
-      for k2 of o
-        o2[k2] = o[k2]
+      o2 = copy o
       o2[k] = v
       o2
 
   lens = (x) ->
-    c =
+    cons =
       switch (typeof x)
         when 'number' then ary
         when 'string' then obj
-    c x
+    cons x
 
   compose = (l2, l1) ->
     get: (o) -> l2.get(l1.get(o))
